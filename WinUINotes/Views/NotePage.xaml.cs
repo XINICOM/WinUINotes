@@ -47,6 +47,7 @@ namespace WinUINotes.Views
             });
         }
 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -56,6 +57,12 @@ namespace WinUINotes.Views
             {
                 noteVM.InitializeForExistingNote(note);
             }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            WeakReferenceMessenger.Default.Unregister<NoteDeletedMessage>(this);
+            base.OnNavigatedFrom(e);
         }
     }
 }
