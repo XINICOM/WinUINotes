@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WinUINotes.Bus.Models;
+using WinUINotes.Bus.Services;
 
 
 namespace WinUINotes.Bus.ViewModels
@@ -18,10 +19,10 @@ namespace WinUINotes.Bus.ViewModels
         [ObservableProperty]
         private ObservableCollection<Note> notes;
 
-        public AllNotesViewModel()
+        public AllNotesViewModel(IFileService fileService)
         {
-            allNotes = new AllNotes();
-            notes = new ObservableCollection<Note>();
+            allNotes = new AllNotes(fileService);
+            notes = [];
         }
 
         [RelayCommand]

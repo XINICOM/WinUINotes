@@ -7,12 +7,16 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using WinUINotes.Bus.Models;
+using WinUINotes.Bus.Services;
+using WinUINotes.Bus.Messages;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace WinUINotes.Bus.ViewModels
 {
     public partial class NoteViewModel : ObservableObject
     {
         private Note note;
+        private IFileService fileService;
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
@@ -26,9 +30,10 @@ namespace WinUINotes.Bus.ViewModels
         [ObservableProperty]
         private DateTime date = DateTime.Now;
 
-        public NoteViewModel()
+        public NoteViewModel(IFileService fileService)
         {
-            this.note = new Note();
+            this.fileService = fileService;
+            this.note = new Note(fileService);
             this.Filename = note.Filename;
         }
 
@@ -62,7 +67,9 @@ namespace WinUINotes.Bus.ViewModels
         private async Task Delete()
         {
             await note.DeleteAsync();
-            note = new Note();
+            note = new Note(fileService);
+            //await Task.Delay(1);
+            WeakReferenceMessenger.Default.Send(new NoteDeletedMessage(note));
         }
 
         private bool CanDelete()
@@ -72,8 +79,8 @@ namespace WinUINotes.Bus.ViewModels
             // In a real application, you shouldn't perform
             // file operations in your CanExecute logic.
             return note is not null
-                && !string.IsNullOrWhiteSpace(this.Filename);
-                //TODO && this.note.NoteFileExists();
+                && !string.IsNullOrWhiteSpace(this.Filename)
+                && this.note.NoteFileExists();
         }
     }
 }

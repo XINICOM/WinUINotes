@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -12,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinUINotes.Bus.Messages;
 using WinUINotes.Bus.Models;
 using WinUINotes.Bus.ViewModels;
 
@@ -25,43 +28,7 @@ namespace WinUINotes.Views
     /// </summary>
     public sealed partial class NotePage : Page
     {
-        //private Note? noteModel;
-        //public NotePage()
-        //{
-        //    InitializeComponent();
-        //}
-        //protected override void OnNavigatedTo(NavigationEventArgs e)
-        //{
-        //    base.OnNavigatedTo(e);
-        //    if (e.Parameter is Note note)
-        //    {
-        //        noteModel = note;
-        //    }
-        //    else
-        //    {
-        //        noteModel = new Note();
-        //    }
-        //}
-
-        //private async void SaveButton_Click(object sender , RoutedEventArgs e)
-        //{
-        //    if (noteModel is not null)
-        //    {
-        //        await noteModel.SaveAsync();
-        //    }
-        //}
-
-        //private async void DeleteButton_Click(object sender , RoutedEventArgs e)
-        //{
-        //    if (noteModel is not null)
-        //    {
-        //        await noteModel.DeleteAsync();
-        //    }
-        //    if (Frame.CanGoBack == true)
-        //    {
-        //        Frame.GoBack();
-        //    }
-        //}
+        
         private NoteViewModel? noteVM;
 
         public NotePage()
@@ -69,11 +36,22 @@ namespace WinUINotes.Views
             this.InitializeComponent();
         }
 
+        public void RegisterForDeleteMessages()
+        {
+            WeakReferenceMessenger.Default.Register<NoteDeletedMessage>(this , (o, m) =>
+            {
+                if (Frame.CanGoBack)
+                {
+                    Frame.GoBack();
+                }
+            });
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            noteVM = new NoteViewModel();
-
+            noteVM = App.Current.Services.GetService<NoteViewModel>();
+            RegisterForDeleteMessages();
             if (e.Parameter is Note note && noteVM is not null)
             {
                 noteVM.InitializeForExistingNote(note);

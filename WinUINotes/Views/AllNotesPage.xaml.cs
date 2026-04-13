@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -44,7 +45,7 @@ namespace WinUINotes.Views
         public AllNotesPage()
         {
             this.InitializeComponent();
-            allNotesVM = new AllNotesViewModel();
+            allNotesVM = App.Current.Services.GetService<AllNotesViewModel>();
         }
 
         private void NewNoteButton_Click(object sender , RoutedEventArgs e)
