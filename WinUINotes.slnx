@@ -5,6 +5,12 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="WinUINotes.Bus/WinUINotes.Bus.csproj" />
+  <Project Path="WinUINotes.Tests/WinUINotes.Tests.csproj" Id="cbcfe48b-8cce-40f9-beeb-001712681734">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
   <Project Path="WinUINotes/WinUINotes.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
