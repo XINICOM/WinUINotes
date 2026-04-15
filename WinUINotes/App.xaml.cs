@@ -70,6 +70,7 @@ namespace WinUINotes
 
         private Window? m_window;
 
+        //todo 全局 APP CURRENT 路由
         public new static App Current => (App)Application.Current;
     }
 }
