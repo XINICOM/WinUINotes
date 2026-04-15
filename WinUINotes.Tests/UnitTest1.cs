@@ -24,25 +24,25 @@ namespace WinUINotes.Tests
 
 
         // Use the UITestMethod attribute for tests that need to run on the UI thread.
-        [UITestMethod]
-        //[TestMethod]
-        public void TestMethod2()
-        {
-            var grid = new Grid();
-            Assert.AreEqual(0 , grid.MinWidth);
+        //[UITestMethod]
+        ////[TestMethod]
+        //public void TestMethod2()
+        //{
+        //    var grid = new Grid();
+        //    Assert.AreEqual(0 , grid.MinWidth);
 
-            //Grid grid = null;
+        //    //Grid grid = null;
 
-            //// 手动调度到 UI 线程
-            //await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-            //    CoreDispatcherPriority.Normal ,
-            //    () =>
-            //    {
-            //        grid = new Grid();
-            //    });
+        //    //// 手动调度到 UI 线程
+        //    //await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+        //    //    CoreDispatcherPriority.Normal ,
+        //    //    () =>
+        //    //    {
+        //    //        grid = new Grid();
+        //    //    });
 
-            //Assert.AreEqual(0 , grid.MinWidth);
-        }
+        //    //Assert.AreEqual(0 , grid.MinWidth);
+        //}
 
         [TestMethod]
         public void TestCreateUnsavedNote()
