@@ -13,12 +13,12 @@ namespace WinUINotes.Bus.ViewModels
         private readonly AllNotes allNotes;
 
         [ObservableProperty]
-        private ObservableCollection<Note> notes;
+        private ObservableCollection<Note> _notes;
 
         public AllNotesViewModel(IFileService fileService)
         {
             allNotes = new AllNotes(fileService);
-            notes = [];
+            _notes = [];
         }
 
         [RelayCommand]
